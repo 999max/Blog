@@ -1,6 +1,16 @@
 {% extends 'blog_app/base.html' %}
 
 {% block page_header %}
+
+    {% if user.is_authenticated %}
+    <div class="jumbotron">
+        <h1 class="display-3">Have new thoughts?</h1>
+
+        <p class="lead">Write about everything here and now</p>
+        <a class="btn btn-lg btn-primary" href="{% url 'blog_app:new_post' %}"
+           role="button">Create New Post &raquo;</a>
+    </div>
+    {% else %}
     <div class="jumbotron">
         <h1 class="display-3">Leave your life here.</h1>
 
@@ -8,6 +18,7 @@
         <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
            role="button">Register an account &raquo;</a>
     </div>
+    {% endif %}
 
 {% endblock page_header %}
 
