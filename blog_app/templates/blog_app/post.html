@@ -3,20 +3,28 @@
 
 {% block page_header %}
     <h3>{{ post.title }}</h3>
+
 {% endblock page_header %}
 
 
 {% block content %}
 <p>{{ post.text }}</p>
-<p><a href="{% url 'blog_app:edit_post' post.id %}">Edit Post</a></p>
 
+{% if user == post.owner %}
+<small><p><a href="{% url 'blog_app:edit_post' post.id %}">Edit Post</a></p></small>
+{% endif %}
 
 
     {% for comment in comments %}
         <div class="card mb-3">
 
         <h5 class="card-header"><b>{{ comment.owner }}</b> says at {{ comment.date_added|date:'d M Y, H:i' }}:
-        <small><i><a href="{% url 'blog_app:edit_comment' comment.id %}">Edit comment</a></i></small></h5>
+            {% if user == comment.owner %}
+            <small><i><a href="{% url 'blog_app:edit_comment' comment.id %}">Edit comment</a></i></small>
+            {% endif %}
+        </h5>
+
+
         <div class="card-body">{{ comment.text|linebreaks }}</div>
 
         </div>

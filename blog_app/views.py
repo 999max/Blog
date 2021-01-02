@@ -15,7 +15,7 @@ def index(request):
 
 @login_required
 def posts(request):
-    posts = Post.objects.filter(owner=request.user).order_by('-date_added')
+    posts = Post.objects.order_by('-date_added')
     context = {'title': 'All Posts', 'posts': posts}
     return render(request, 'blog_app/posts.html', context)
 
@@ -23,9 +23,10 @@ def posts(request):
 @login_required
 def post(request, post_id):
     post = Post.objects.get(pk=post_id)
+
     # check if this post belongs to the owner
-    if post.owner != request.user:
-        raise Http404
+    # if post.owner != request.user:
+    #    raise Http404
 
     comments = post.comment_set.order_by('-date_added')
     context = {'title': 'Post', 'post': post, 'comments': comments}
