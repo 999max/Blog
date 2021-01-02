@@ -1,0 +1,12 @@
+{% extends 'blog_app/base.html' %}
+{% block content %}
+
+<h2>Add Comment</h2>
+
+<form action="{% url 'blog_app:new_comment' post.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit">Add comment</button>
+</form>
+
+{% endblock content %}

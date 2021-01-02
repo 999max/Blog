@@ -1,0 +1,21 @@
+{% extends 'blog_app/base.html' %}
+
+{% block page_header %}
+    <h1>All Posts in the Blog</h1>
+{% endblock page_header %}
+
+
+{% block content %}
+    <ul>
+        {% for post in posts %}
+            <li><h3>
+                <a href="{% url 'blog_app:post' post.id %}">{{ post.title }}</a>
+            </h3></li>
+        {% empty %}
+            <li><h3>There are no post yet. You can post something right now.</h3></li>
+        {% endfor %}
+    </ul>
+
+    <h3><a href="{% url 'blog_app:new_post' %}">Create new post</a> </h3>
+
+{% endblock content %}
