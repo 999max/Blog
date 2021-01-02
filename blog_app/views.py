@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from .models import Post, Comment
@@ -22,7 +22,7 @@ def posts(request):
 
 @login_required
 def post(request, post_id):
-    post = Post.objects.get(pk=post_id)
+    post = get_object_or_404(Post, id=post_id)
 
     # check if this post belongs to the owner
     # if post.owner != request.user:
@@ -52,7 +52,7 @@ def new_post(request):
 
 @login_required()
 def edit_post(request, post_id):
-    post = Post.objects.get(id=post_id)
+    post = get_object_or_404(Post, id=post_id)
     # check if this post belongs to the owner
     if post.owner != request.user:
         raise Http404
@@ -71,7 +71,7 @@ def edit_post(request, post_id):
 @login_required
 def new_comment(request, post_id):
     """Create comment for post."""
-    post = Post.objects.get(id=post_id)
+    post = get_object_or_404(Post, id=post_id)
 
     if request.method != 'POST':
         form = CommentForm()
@@ -90,7 +90,7 @@ def new_comment(request, post_id):
 
 @login_required
 def edit_comment(request, comment_id):
-    comment = Comment.objects.get(id=comment_id)
+    comment = get_object_or_404(Comment, id=comment_id)
     # check if this comment belongs to the owner
     if comment.owner != request.user:
         raise Http404
